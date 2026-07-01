@@ -10,8 +10,9 @@ namespace fhir_server_mapping
 {
     public static class MapMedicationRequest
     {
-        
-        private static string GetPatientRefDisplay(String PatientId)
+        private const string OpioidWarningText = "WARNINGS - Limitations of use - Because of the risks associated with the use of opioids, [Product] should only be used in patients for whom other treatment options, including non-opioid analgesics, are ineffective, not tolerated or otherwise inadequate to provide appropriate management of pain";
+
+        private static string GetPersonRefDisplay(String PatientId)
         {
             string display="";
             List<LegacyFilter> criteria=new List<LegacyFilter>();
@@ -33,7 +34,9 @@ namespace fhir_server_mapping
                 FhirJsonParser parser = new FhirJsonParser(new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false });
                 string compoundId = rx.patient_id.ToString() + "-"+rx.prescriber_id.ToString()+"-"+rx.prescription_date.ToString().Replace("-","")+"-"+rx.rxnorm_code.ToString();
                 mr.Id = Convert.ToBase64String(Encoding.UTF8.GetBytes(compoundId));
-                string PatientDisplay=GetPatientRefDisplay(rx.patient_id.ToString());
+                mr.Status = MedicationRequest.MedicationrequestStatus.Active;
+                mr.Intent = MedicationRequest.MedicationRequestIntent.Order;
+                string PatientDisplay=GetPersonRefDisplay(rx.patient_id.ToString());
                 mr.Subject = new ResourceReference()
                 {
                     Reference = $"Patient/{rx.patient_id}",
@@ -43,18 +46,26 @@ namespace fhir_server_mapping
                 CodeableConcept cc=new CodeableConcept("http://www.nlm.nih.gov/research/umls/rxnorm",rx.rxnorm_code,rx.rxnorm_display);
                 mr.Medication=cc;
                 bool opioid=LegacyAPIAccess.CheckIfOpioid(rx.rxnorm_code);
+                string RequesterDisplay=GetPersonRefDisplay(rx.prescriber_id.ToString());
                 mr.Requester =new ResourceReference()
                 {
-                    Reference =$"Practitioner/{rx.prescriber_id}"
+                    Reference =$"Practitioner/{rx.prescriber_id}",
+                    Display = $"{RequesterDisplay}"
                 };
                 List<Dosage> ds = new List<Dosage>();
-                    
+
                 if (!string.IsNullOrEmpty(rx.sig))
                 {
                     Dosage item = new Dosage();
                     item.Text=rx.sig.ToString();
                     ds.Add(item);
-                    
+
+                }
+                if (opioid)
+                {
+                    Dosage warning = new Dosage();
+                    warning.Text = OpioidWarningText;
+                    ds.Add(warning);
                 }
                 if (ds.Count>0)
                 {mr.DosageInstruction = ds;}

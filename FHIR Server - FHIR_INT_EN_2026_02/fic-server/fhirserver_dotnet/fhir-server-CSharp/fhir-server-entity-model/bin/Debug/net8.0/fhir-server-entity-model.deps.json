@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "fhir-server-entity-model/1.0.0": {
+        "runtime": {
+          "fhir-server-entity-model.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "fhir-server-entity-model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

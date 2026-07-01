@@ -131,7 +131,10 @@ namespace fhir_server_CSharp
                 {
                     strResponse = Patient_Route(request);
                 }
-               
+                else if (resource.Equals(ResourceType.Practitioner.ToString(), StringComparison.Ordinal))
+                {
+                    strResponse = Practitioner_Route(request);
+                }
                 else if (resource.Equals(ResourceType.MedicationRequest.ToString(), StringComparison.Ordinal))
                 {
                     strResponse = MedicationRequest_Route(request);
@@ -415,6 +418,65 @@ namespace fhir_server_CSharp
 
             return strResponse;
         }
+        private static String Practitioner_Route(HttpListenerRequest request)
+        {
+            String strResponse = String.Empty;
+            List<fhir_server_entity_model.LegacyFilter> criteria = new List<fhir_server_entity_model.LegacyFilter>();
+            bool HardIdSearch = false;
+            HttpStatusCodeForResponse = 200;
+            LocationHeaderValue = null;
+
+            Utilz.PrintRequest(request, ref RequestCounter);
+            sb.Append($"RS {RequestCounter} : ");
+
+            if (!PractitionerSearchParameterValidation.ValidateSearchParams(request, ref HardIdSearch, out DomainResource operation, out criteria))
+            {
+                RequestCounter++;
+                return operation.ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
+            }
+
+            if (HardIdSearch)
+            {
+                var data = fhir_server_dataaccess.PatientDataAccess.GetPerson(criteria);
+
+                if (data == null || data.Count == 0)
+                {
+                    HttpStatusCodeForResponse = (int)HttpStatusCode.NotFound;
+                    strResponse = Utilz.getErrorOperationOutcome($"HTTP 404 Not Found: Resource Practitioner/{criteria[0].value} is not known", OperationOutcome.IssueSeverity.Information).ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
+                }
+                else if (!fhir_server_dataaccess.PractitionerDataAccess.HasNPI(data[0].PRSN_ID))
+                {
+                    HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                    strResponse = Utilz.getErrorOperationOutcome("HTTP 400 Bad Request: The person you requested is not a practitioner - Lacks a NPI identifier").ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
+                }
+                else
+                {
+                    var practitioner = fhir_server_mapping.MapPractitioner.GetFHIRPractitionerResource(data[0]);
+
+                    if (FhirServerConfig.ValidatePractitionerBundleAndResource)
+                    {
+                        bool isResourceValid = SharedServices.ValidateResource(practitioner, out OperationOutcome outcome);
+
+                        if (!isResourceValid)
+                        {
+                            return outcome.ToJson(new FhirJsonSerializationSettings() { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+                        }
+                    }
+
+                    strResponse = practitioner.ToJson(new FhirJsonSerializationSettings() { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+                }
+            }
+            else
+            {
+                var data = criteria.Count == 0
+                    ? fhir_server_dataaccess.PractitionerDataAccess.GetAllPractitioners()
+                    : fhir_server_dataaccess.PractitionerDataAccess.GetPractitioner(criteria);
+
+                strResponse = fhir_server_mapping.MapPractitionerBundle.GetPractitionerBundle(data, request.Url.ToString());
+            }
+
+            return strResponse;
+        }
         private static DomainResource CapabilityOfTheServer(string url)
         {
             return new CapabilityStatement()
@@ -551,6 +613,75 @@ namespace fhir_server_CSharp
                                         Name = "email",
                                         Type = SearchParamType.Token,
                                         Documentation = new Markdown("Patient's email")
+                                    }
+                                }
+                            },
+                            new CapabilityStatement.ResourceComponent()
+                            {
+                                Type = ResourceType.Practitioner.ToString(),
+                                Profile = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+                                Documentation = new Markdown("Describes the supported interactions and search parameters for this resource. A practitioner is a person with an NPI identifier; persons without one are not returned."),
+                                Versioning = CapabilityStatement.ResourceVersionPolicy.NoVersion,
+                                Interaction = new List<CapabilityStatement.ResourceInteractionComponent>()
+                                {
+                                    new CapabilityStatement.ResourceInteractionComponent() { Code = CapabilityStatement.TypeRestfulInteraction.Read } ,
+                                    new CapabilityStatement.ResourceInteractionComponent() { Code = CapabilityStatement.TypeRestfulInteraction.SearchType }
+                                },
+                                SearchParam = new List<CapabilityStatement.SearchParamComponent>()
+                                {
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "/[id]",
+                                        Type = SearchParamType.Number,
+                                        Documentation = new Markdown("Search by resource id. Eg. [base]/Practitioner/1")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "_id",
+                                        Type = SearchParamType.Token,
+                                        Documentation = new Markdown("Search by the ID of the resource. Eg. [base]/Practitioner?_id=1")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "identifier",
+                                        Type = SearchParamType.Token,
+                                        Documentation = new Markdown("A practitioner identifier. Only the NPI system is accepted. Eg. [base]/Practitioner?identifier=https://fhirintermediatecourse.org/NPI|54323")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "name",
+                                        Type = SearchParamType.String,
+                                        Documentation = new Markdown("A server defined search that may match any of the string fields in the HumanName, including family or given. Eg. [base]/Practitioner?name=Andrew")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "family",
+                                        Type = SearchParamType.String,
+                                        Documentation = new Markdown("A portion of the family name of the practitioner")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "given",
+                                        Type = SearchParamType.String,
+                                        Documentation = new Markdown("A portion of the given name of the practitioner")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "telecom",
+                                        Type = SearchParamType.Token,
+                                        Documentation = new Markdown("The value in any kind of telecom details of the practitioner")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "email",
+                                        Type = SearchParamType.Token,
+                                        Documentation = new Markdown("Practitioner's email")
+                                    },
+                                    new CapabilityStatement.SearchParamComponent()
+                                    {
+                                        Name = "gender",
+                                        Type = SearchParamType.String,
+                                        Documentation = new Markdown("Gender of the practitioner. Refer to http://hl7.org/fhir/R4/valueset-administrative-gender.html for more information.")
                                     }
                                 }
                             },

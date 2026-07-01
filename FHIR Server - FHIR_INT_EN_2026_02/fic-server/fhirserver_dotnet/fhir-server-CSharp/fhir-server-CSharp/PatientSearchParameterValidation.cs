@@ -218,14 +218,58 @@ namespace fhir_server_CSharp
                                 sc.criteria=LegacyFilter.field.gender;
                                 sc.value=request.QueryString[param.ToString()];
                                 criteria.Add(sc);
-                                 rtnValue=true;   
-                            
+                                 rtnValue=true;
+
+                        }
+                        else if (param.ToString().Equals("email", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (!param.ToString().Equals("email", StringComparison.Ordinal))
+                            {
+                                rtnValue = false;
+                                Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                break;
+                            }
+
+                            LegacyFilter sc=new LegacyFilter();
+                            sc.criteria=LegacyFilter.field.email;
+                            sc.value=request.QueryString[param.ToString()];
+                            criteria.Add(sc);
+                            rtnValue=true;
+                        }
+                        else if (param.ToString().Equals("telecom", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (!param.ToString().Equals("telecom", StringComparison.Ordinal))
+                            {
+                                rtnValue = false;
+                                Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                break;
+                            }
+
+                            string[] telecomParts = request.QueryString[param.ToString()].Split("|", StringSplitOptions.RemoveEmptyEntries);
+                            string telecomSystem = telecomParts.Length > 1 ? telecomParts[0] : null;
+                            string telecomValue = telecomParts.Length > 1 ? telecomParts[1] : telecomParts[0];
+
+                            if (!string.IsNullOrEmpty(telecomSystem) && !telecomSystem.Equals("email", StringComparison.OrdinalIgnoreCase))
+                            {
+                                rtnValue = false;
+                                Program.HttpStatusCodeForResponse = (int)HttpStatusCode.NotImplemented;
+                                operation = Utilz.getErrorOperationOutcome($"HTTP 501 Not Implemented: The underlying server only handles email addresses for the patients, thus search by system={telecomSystem} is not implemented");
+                                break;
+                            }
+
+                            LegacyFilter sc=new LegacyFilter();
+                            sc.criteria=LegacyFilter.field.email;
+                            sc.value=telecomValue;
+                            criteria.Add(sc);
+                            rtnValue=true;
                         }
                         else
                         {
                             rtnValue = false;
                             Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                            operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
+                            operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
                             break;
                         }
                     }

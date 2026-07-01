@@ -1,0 +1,274 @@
+{
+  "format": 1,
+  "restore": {
+    "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-dataaccess/fhir-server-dataaccess.csproj": {}
+  },
+  "projects": {
+    "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-dataaccess/fhir-server-dataaccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-dataaccess/fhir-server-dataaccess.csproj",
+        "projectName": "fhir-server-dataaccess",
+        "projectPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-dataaccess/fhir-server-dataaccess.csproj",
+        "packagesPath": "/home/codespace/.nuget/packages/",
+        "outputPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-dataaccess/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/codespace/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/fhir-server-entity-model.csproj": {
+                "projectPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/fhir-server-entity-model.csproj"
+              },
+              "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-sharedservices/fhir-server-sharedservices.csproj": {
+                "projectPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-sharedservices/fhir-server-sharedservices.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Hl7.Fhir.R4": {
+              "target": "Package",
+              "version": "[5.12.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.22, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/fhir-server-entity-model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/fhir-server-entity-model.csproj",
+        "projectName": "fhir-server-entity-model",
+        "projectPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/fhir-server-entity-model.csproj",
+        "packagesPath": "/home/codespace/.nuget/packages/",
+        "outputPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/codespace/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-sharedservices/fhir-server-sharedservices.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-sharedservices/fhir-server-sharedservices.csproj",
+        "projectName": "fhir-server-sharedservices",
+        "projectPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-sharedservices/fhir-server-sharedservices.csproj",
+        "packagesPath": "/home/codespace/.nuget/packages/",
+        "outputPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-sharedservices/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/codespace/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/fhir-server-entity-model.csproj": {
+                "projectPath": "/workspaces/FHIR-Server---FHIR_INT_EN_2026_02/FHIR Server - FHIR_INT_EN_2026_02/fic-server/fhirserver_dotnet/fhir-server-CSharp/fhir-server-entity-model/fhir-server-entity-model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.200"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Hl7.Fhir.R4": {
+              "target": "Package",
+              "version": "[5.12.0, )"
+            },
+            "Hl7.Fhir.Specification.R4": {
+              "target": "Package",
+              "version": "[5.12.0, )"
+            },
+            "Hl7.Fhir.Validation.Legacy.R4": {
+              "target": "Package",
+              "version": "[5.11.0, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.FileProviders.Physical": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.25, 8.0.25]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
