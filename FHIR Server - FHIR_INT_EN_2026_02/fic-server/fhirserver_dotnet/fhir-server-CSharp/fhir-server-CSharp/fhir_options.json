@@ -1,0 +1,27 @@
+{
+  "SystemMap": [
+    {
+      "type": "NI",
+      "system": "http://fhirintermediatecourse.org/NI",
+      "use": "usual"
+    },
+    {
+      "type": "PP",
+      "system": "http://fhirintermediatecourse.org/PP",
+      "use": "usual"
+    },
+    {
+      "type": "ID",
+      "system": "http://fhirintermediatecourse.org/patient-id",
+      "use": "official"
+    },
+    {
+      "Type": "NPI",
+      "System": "http://fhirintermediatecourse.org/NPI",
+      "Use": "official"
+    }
+  ],
+  "HospitalIdentifierUrl": "http://fhirintermediatecourse.org/patient-id",
+  "PractitionerIdentifierUrl": "http://fhirintermediatecourse.org/NPI"
+
+}
